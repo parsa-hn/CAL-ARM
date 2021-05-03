@@ -1,6 +1,6 @@
 module ARM(input clk, rst);
     reg freeze = 0, Branch_taken = 0, flush = 0;
-    reg [31:0] BranchAddr = 32'd0;
+    reg [31:0] BranchAddr = 32'b0;
     wire [31:0] Instruction, Instruction_in;
     wire [31:0] PC [0:9];
 

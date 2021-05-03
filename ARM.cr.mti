@@ -1,32 +1,73 @@
-{C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage.v}
+{C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage_Reg.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage_Reg.v}
 Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
--- Compiling module ID_Stage
-** Error: C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage.v(8): (vlog-2110) Illegal reference to net "PC".
+** Error: (vlog-19) Failed to access library 'work' at "work".
 
+No such file or directory. (errno = ENOENT)
 
-} {4.0 5.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/TestBench.v} {1 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/TestBench.v}
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/IF_Stage_Reg.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/IF_Stage_Reg.v}
 Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
--- Compiling module TB
+** Error: (vlog-19) Failed to access library 'work' at "work".
 
-Top level modules:
-	TB
+No such file or directory. (errno = ENOENT)
 
-} {} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage.v}
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage.v}
 Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
--- Compiling module MEM_Stage
-** Error: C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage.v(8): (vlog-2110) Illegal reference to net "PC".
+** Error: (vlog-19) Failed to access library 'work' at "work".
 
+No such file or directory. (errno = ENOENT)
 
-} {4.0 5.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage.v}
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/TestBench.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/TestBench.v}
 Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
--- Compiling module WB_Stage
-** Error: C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage.v(8): (vlog-2110) Illegal reference to net "PC".
+** Error: (vlog-19) Failed to access library 'work' at "work".
 
+No such file or directory. (errno = ENOENT)
 
-} {4.0 5.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage.v}
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/Instruction_Memory.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/Instruction_Memory.v}
 Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
--- Compiling module EXE_Stage
-** Error: C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage.v(8): (vlog-2110) Illegal reference to net "PC".
+** Error: (vlog-19) Failed to access library 'work' at "work".
 
+No such file or directory. (errno = ENOENT)
 
-} {4.0 5.0} {}}
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/IF_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/IF_Stage.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+** Error: (vlog-19) Failed to access library 'work' at "work".
+
+No such file or directory. (errno = ENOENT)
+
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+** Error: (vlog-19) Failed to access library 'work' at "work".
+
+No such file or directory. (errno = ENOENT)
+
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage_Reg.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage_Reg.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+** Error: (vlog-19) Failed to access library 'work' at "work".
+
+No such file or directory. (errno = ENOENT)
+
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage_Reg.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage_Reg.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+** Error: (vlog-19) Failed to access library 'work' at "work".
+
+No such file or directory. (errno = ENOENT)
+
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+** Error: (vlog-19) Failed to access library 'work' at "work".
+
+No such file or directory. (errno = ENOENT)
+
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage_Reg.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage_Reg.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+** Error: (vlog-19) Failed to access library 'work' at "work".
+
+No such file or directory. (errno = ENOENT)
+
+} {3.0 4.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+** Error: (vlog-19) Failed to access library 'work' at "work".
+
+No such file or directory. (errno = ENOENT)
+
+} {3.0 4.0} {}}
