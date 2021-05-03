@@ -1,0 +1,32 @@
+{C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module ID_Stage
+** Error: C:/Users/ASUS/Desktop/CAL Project/ARM/ID_Stage.v(8): (vlog-2110) Illegal reference to net "PC".
+
+
+} {4.0 5.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/TestBench.v} {1 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/TestBench.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module TB
+
+Top level modules:
+	TB
+
+} {} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MEM_Stage
+** Error: C:/Users/ASUS/Desktop/CAL Project/ARM/MEM_Stage.v(8): (vlog-2110) Illegal reference to net "PC".
+
+
+} {4.0 5.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module WB_Stage
+** Error: C:/Users/ASUS/Desktop/CAL Project/ARM/WB_Stage.v(8): (vlog-2110) Illegal reference to net "PC".
+
+
+} {4.0 5.0} {}} {C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage.v} {0 {vlog -work work {C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module EXE_Stage
+** Error: C:/Users/ASUS/Desktop/CAL Project/ARM/EXE_Stage.v(8): (vlog-2110) Illegal reference to net "PC".
+
+
+} {4.0 5.0} {}}

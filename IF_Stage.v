@@ -4,16 +4,15 @@ module IF_Stage(
     output reg [31:0] PC,
     output [31:0] Instruction
     );
-    wire [31:0] PC_in;
     Instruction_Memory Instruction_Memory(PC, Instruction);
-    always @(posedge clk, posedge rst)
-	begin
+    
+    always @(posedge clk, posedge rst) begin
 		if (rst)
-			PC <= 32'b0;
+            PC <= 32'b0;
 		else if (freeze)
-			PC <= PC_in;
+			PC <= PC;
 		else
-			PC <= PC_in + 32'd4;
+			PC <= PC + 32'd4;
 	end
 
 endmodule
