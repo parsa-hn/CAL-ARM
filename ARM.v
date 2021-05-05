@@ -30,7 +30,7 @@ module ARM(input clk, rst);
         clk, rst, flush, ID_WB_EN, ID_MEM_R_EN, ID_MEM_W_EN, ID_B, ID_S, ID_EXE_CMD, PC[2],
         ID_Val_Rn, ID_Val_Rm, ID_imm, ID_Shift_operand, ID_Signed_imm_24, ID_Dest,
         ID_Reg_WB_EN, ID_Reg_MEM_R_EN, ID_Reg_MEM_W_EN, ID_Reg_B, ID_Reg_S, ID_Reg_EXE_CMD, PC[3],
-        ID_Reg_Val_Rn, ID_Reg_Val_Rm, ID_Reg_imm, ID_Reg_Shift_operand, ID_Reg_Signed_imm_24, ID_Reg_Dest,
+        ID_Reg_Val_Rn, ID_Reg_Val_Rm, ID_Reg_imm, ID_Reg_Shift_operand, ID_Reg_Signed_imm_24, ID_Reg_Dest
     );
 
     EXE_Stage exe_stage(clk, rst, PC[3], PC[4]);
