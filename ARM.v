@@ -2,9 +2,9 @@ module ARM(input clk, rst);
     reg freeze = 0, Branch_taken = 0, flush = 0;
     reg [31:0] BranchAddr = 32'b0;
     wire [31:0] Instruction, Instruction_in;
-    wire [31:0] PC [0:9];
+    wire [31:0] PC [0:8];
 
-    //ID Stage
+    //ID Stage wires
     wire ID_WB_EN, ID_MEM_R_EN, ID_MEM_W_EN, ID_B, ID_S, ID_imm, ID_Two_src;
     wire [3:0] ID_EXE_CMD, ID_Dest, ID_src1, ID_src2;
     wire [31:0] ID_Val_Rn, ID_Val_Rm;
@@ -17,11 +17,25 @@ module ARM(input clk, rst);
     wire [11:0] ID_Reg_Shift_operand;
     wire [23:0] ID_Reg_Signed_imm_24;
 
+    //EXE Stage wires
+    wire [31:0] EXE_ALU_result, EXE_Br_addr;
+    wire [3:0] EXE_status, SR;
+
+    wire Exe_Reg_WB_EN, Exe_Reg_MEM_R_EN, Exe_Reg_MEM_W_EN;
+    wire [31:0] EXE_Reg_ALU_result, Exe_Reg_Val_Rm;
+    wire [3:0] Exe_Reg_Dest;
+
+    //WB Stage wires
+
+    //MEM Stage wires
+
+    //IF Stage
     IF_Stage if_stage(clk, rst, freeze, Branch_taken, BranchAddr, PC[0], Instruction_in);
     IF_Stage_Reg if_stage_reg(clk, rst, freeze, flush, PC[0], Instruction_in, PC[1], Instruction);
 
+    //ID Stage
     ID_Stage id_stage(
-        clk, rst, PC[1], Instruction, 32'b0, 1'b0, 4'b0, 1'b0, 4'b0,
+        clk, rst, PC[1], Instruction, 32'b0, 1'b0, 4'b0, 1'b0, SR,
         ID_WB_EN, ID_MEM_R_EN, ID_MEM_W_EN, ID_B, ID_S, 
         ID_EXE_CMD, ID_Val_Rn, ID_Val_Rm, PC[2], ID_imm, ID_Shift_operand,
         ID_Signed_imm_24, ID_Dest, ID_src1, ID_src2, ID_Two_src
@@ -33,13 +47,24 @@ module ARM(input clk, rst);
         ID_Reg_Val_Rn, ID_Reg_Val_Rm, ID_Reg_imm, ID_Reg_Shift_operand, ID_Reg_Signed_imm_24, ID_Reg_Dest
     );
 
-    EXE_Stage exe_stage(clk, rst, PC[3], PC[4]);
-    EXE_Stage_Reg exe_stage_reg(clk, rst, PC[4], PC[5]);
+    //EXE Stage
+    Status_Register status_register(
+        clk, rst, ID_Reg_S, EXE_status, SR
+    );
+    EXE_Stage exe_stage(
+        clk, ID_Reg_EXE_CMD, ID_Reg_MEM_R_EN, ID_Reg_MEM_W_EN, PC[3], ID_Reg_Val_Rn, ID_Reg_Val_Rm,
+        ID_Reg_imm, ID_Reg_Shift_operand, ID_Reg_Signed_imm_24, SR,
+        EXE_ALU_result, EXE_Br_addr, EXE_status
+    );
+    EXE_Stage_Reg exe_stage_reg(
+        clk, rst, ID_Reg_WB_EN, ID_Reg_MEM_R_EN, ID_Reg_MEM_W_EN, EXE_ALU_result, ID_Reg_Val_Rm, ID_Reg_Dest,
+        Exe_Reg_WB_EN, Exe_Reg_MEM_R_EN, Exe_Reg_MEM_W_EN, EXE_Reg_ALU_result, Exe_Reg_Val_Rm, Exe_Reg_Dest
+    );
     
+    //MEM Stage
     MEM_Stage mem_stage(clk, rst, PC[5], PC[6]);
     MEM_Stage_Reg mem_stage_reg(clk, rst, PC[6], PC[7]);
 
-    WB_Stage wb_stage(clk, rst, PC[7], PC[8]);
-    WB_Stage_Reg wb_stage_reg(clk, rst, PC[8], PC[9]);
+    //WB Stage
     
 endmodule
