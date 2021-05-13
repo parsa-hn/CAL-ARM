@@ -3,5 +3,5 @@ module WB_Stage(
     input MEM_R_EN,
     output [31:0] Write_value
 );
-    assign Write_value = MEM_R_EN ? ALU_result : MEM_result;
+    assign Write_value = MEM_R_EN ? MEM_result : ALU_result;
 endmodule

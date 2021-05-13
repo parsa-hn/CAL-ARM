@@ -1,4 +1,4 @@
-module EXE_State_Reg(
+module EXE_Stage_Reg(
     input clk, rst, 
     input WB_en_in, MEM_R_EN_in, MEM_W_EN_in,
     input [31:0] ALU_Result_in, val_Rm_in,

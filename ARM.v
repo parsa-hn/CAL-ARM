@@ -26,8 +26,12 @@ module ARM(input clk, rst);
     wire [3:0] Exe_Reg_Dest;
 
     //WB Stage wires
+    wire [31:0] WB_Value;
 
     //MEM Stage wires
+    wire MEM_Reg_WB_en, MEM_Reg_MEM_R_en;
+    wire [31:0] MEM_Reg_ALU_result, MEM_Reg_Mem_read_value;
+    wire [3:0] MEM_Reg_Dest;
 
     //IF Stage
     IF_Stage if_stage(clk, rst, freeze, Branch_taken, BranchAddr, PC[0], Instruction_in);
@@ -35,7 +39,7 @@ module ARM(input clk, rst);
 
     //ID Stage
     ID_Stage id_stage(
-        clk, rst, PC[1], Instruction, 32'b0, 1'b0, 4'b0, 1'b0, SR,
+        clk, rst, PC[1], Instruction, WB_Value, MEM_Reg_WB_en, MEM_Reg_Dest, 1'b0, SR,
         ID_WB_EN, ID_MEM_R_EN, ID_MEM_W_EN, ID_B, ID_S, 
         ID_EXE_CMD, ID_Val_Rn, ID_Val_Rm, PC[2], ID_imm, ID_Shift_operand,
         ID_Signed_imm_24, ID_Dest, ID_src1, ID_src2, ID_Two_src
@@ -63,8 +67,15 @@ module ARM(input clk, rst);
     
     //MEM Stage
     MEM_Stage mem_stage(clk, rst, PC[5], PC[6]);
-    MEM_Stage_Reg mem_stage_reg(clk, rst, PC[6], PC[7]);
+    MEM_Stage_Reg mem_stage_reg(
+        clk, rst, Exe_Reg_WB_EN, Exe_Reg_MEM_R_EN, EXE_Reg_ALU_result, 32'b0, Exe_Reg_Dest,
+        MEM_Reg_WB_en, MEM_Reg_MEM_R_en, MEM_Reg_ALU_result, MEM_Reg_Mem_read_value, MEM_Reg_Dest
+    );
 
     //WB Stage
+    WB_Stage wb_stage(
+        MEM_Reg_ALU_result, MEM_Reg_Mem_read_value, MEM_Reg_MEM_R_en,
+        WB_Value
+    );
     
 endmodule
