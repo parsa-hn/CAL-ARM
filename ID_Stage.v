@@ -33,12 +33,12 @@ module ID_Stage(
         instruction[27:26], instruction[24:21], instruction[20], 
         CU_EXE_CMD, CU_mem_read, CU_mem_write, CU_wb_en, CU_S, CU_B
         );
-    assign WB_EN = ~((~CC_out) | hazard) ? CU_wb_en : 0;
-	assign S = ~((~CC_out) | hazard) ? CU_S :0;
-	assign B = ~((~CC_out) | hazard) ? CU_B : 0;
-	assign MEM_R_EN = ~((~CC_out) | hazard) ? CU_mem_read : 0;
-	assign MEM_W_EN = ~((~CC_out) | hazard) ? CU_mem_write : 0;
-	assign EXE_CMD = ~((~CC_out) | hazard) ? CU_EXE_CMD : 0;
+    assign WB_EN = ((~CC_out) | hazard) ? 0 : CU_wb_en;
+	assign S = ((~CC_out) | hazard) ? 0 : CU_S;
+	assign B = ((~CC_out) | hazard) ? 0 : CU_B;
+	assign MEM_R_EN = ((~CC_out) | hazard) ? 0 : CU_mem_read;
+	assign MEM_W_EN = ((~CC_out) | hazard) ? 0 : CU_mem_write;
+	assign EXE_CMD = ((~CC_out) | hazard) ? 0 : CU_EXE_CMD;
     
 	assign src1 = instruction[19:16];
 	assign src2 = (MEM_W_EN == 0) ? instruction[3:0] : instruction[15:12];
