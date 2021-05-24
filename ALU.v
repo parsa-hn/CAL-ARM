@@ -23,7 +23,7 @@ module ALU(
 	assign SUB_V_out = ((~SUB_output[31]) & Val1[31] & (~Val2[31])) | 
                     (SUB_output[31] & (~Val1[31]) & (Val2[31]));
 
-	assign {SBC_C_out, SBC_output} = Val1 - Val2 - 1'b1;
+	assign {SBC_C_out, SBC_output} = Val1 - Val2 - !C_in;
 	assign SBC_V_out = ((~SBC_output[31]) & Val1[31] & (~Val2[31])) | 
                     (SBC_output[31] & (~Val1[31]) & (Val2[31]));
 
@@ -56,7 +56,8 @@ module ALU(
             4'b0110: final_output <= Val1 & Val2; //AND, TST
             4'b0111: final_output <= Val1 | Val2; //OR
             4'b1000: final_output <= Val1 ^ Val2; //EOR
-        endcase 
+        endcase
+        if (V_out) C_out <= 0;
     end
 
     assign N_out = final_output[31];

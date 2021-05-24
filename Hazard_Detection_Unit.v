@@ -4,7 +4,7 @@ module Hazard_Detection_Unit(
 	input [3:0] Mem_Dest,
     input Mem_WB_EN,
 	input two_src,
-    output hazard_detected
+    output hazard
 );
     wire exe_hazard_one_src, exe_hazard_two_src;
 	wire mem_hazard_one_src, mem_hazard_two_src;
