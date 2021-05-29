@@ -3,7 +3,7 @@ module ID_Stage(
     //from IF Reg
     input [31:0] PC_in, instruction,
     //from WB stage
-    input [31 : 0] Result_WB,
+    input [31:0] Result_WB,
     input writeBackEn,
     input [3:0] Dest_wb,
     //from hazard detect module

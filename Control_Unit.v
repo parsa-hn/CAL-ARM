@@ -26,8 +26,8 @@ module Control_Unit(
             6'b001100: begin S_out <= S_in; EXE_CMD <= 4'b0111; wb_en <= 1'b1; end //OR
             6'b000001: begin S_out <= S_in; EXE_CMD <= 4'b1000; wb_en <= 1'b1; end //EOR
 
-            6'b001010: begin S_out <= 1'b1; EXE_CMD <= 4'b0100; wb_en <= 1'b1; end //CMP
-            6'b001000: begin S_out <= 1'b1; EXE_CMD <= 4'b0110; wb_en <= 1'b1; end //TST
+            6'b001010: begin S_out <= 1'b1; EXE_CMD <= 4'b0100; end //CMP
+            6'b001000: begin S_out <= 1'b1; EXE_CMD <= 4'b0110; end //TST
 
             6'b010100: 
                 begin 
