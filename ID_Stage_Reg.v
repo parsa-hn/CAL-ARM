@@ -1,5 +1,5 @@
 module ID_Stage_Reg(
-    input clk, rst, flush,
+    input clk, rst, sram_freeze, flush,
     input WB_EN_IN, MEM_R_EN_IN, MEM_W_EN_IN,
     input B_IN, S_IN,
     input [3:0] EXE_CMD_IN,
@@ -40,7 +40,7 @@ module ID_Stage_Reg(
             Src1 <= 4'b0;
             Src2 <= 4'b0;
         end
-        else begin
+        else if (~sram_freeze) begin
             WB_EN <= WB_EN_IN;
             MEM_R_EN <= MEM_R_EN_IN;
             MEM_W_EN <= MEM_W_EN_IN;
