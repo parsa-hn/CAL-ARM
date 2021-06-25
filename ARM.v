@@ -2,7 +2,7 @@ module ARM(
     input clk, rst, forward_en,
     output SRAM_WE_N, 
     output [16:0] SRAM_ADDR, 
-    inout [31:0] SRAM_DQ
+    inout [63:0] SRAM_DQ
 );
 
     wire [31:0] Instruction, Instruction_in, branch_address;
@@ -42,7 +42,7 @@ module ARM(
 
     wire sram_freeze;
     wire sram_ctrl_ready, SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N;
-    wire [31:0] sram_ctrl_readData;
+    wire [63:0] sram_ctrl_readData;
 
     wire [31:0] cache_r_data, cache_sram_address, cache_sram_wdata;
     wire cache_ready, cache_sram_read, cache_sram_write;

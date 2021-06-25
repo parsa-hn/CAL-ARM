@@ -3,10 +3,10 @@ module SRAM_Controller(
     input write_en, read_en,
     input [31:0] address, writeData,
 
-    output reg [31:0] readData,
+    output reg [63:0] readData,
     output reg ready,
     
-    inout [31:0] SRAM_DQ,
+    inout [63:0] SRAM_DQ,
     output [16:0] SRAM_ADDR,
     output reg SRAM_WE_N, 
     output SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N
@@ -18,12 +18,11 @@ module SRAM_Controller(
     reg sram_load_en;
 
     assign {SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N} = 4'b0;
-    assign SRAM_DQ = SRAM_WE_N ? 32'bz : writeData;
-    assign SRAM_ADDR = {address[16:2], 2'b0} - 17'd1024;
+    assign SRAM_DQ = SRAM_WE_N ? 64'bz : {32'b0, writeData};
+    assign SRAM_ADDR = address[16:0] - 17'd1024;
     
     always @(ps, write_en, read_en) begin
         ns <= idle;
-        // SRAM_WE_N <= 1'b1;
         
         case (ps)
             idle: begin 
@@ -42,7 +41,7 @@ module SRAM_Controller(
     end
 
     always @(posedge clk, posedge rst) begin
-        if (rst) readData <= 32'b0;
+        if (rst) readData <= 64'b0;
         else if (sram_load_en) readData <= SRAM_DQ;
     end
 

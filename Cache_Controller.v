@@ -12,7 +12,7 @@ module Cache_Controller(
     output reg [31:0] sram_address, sram_wdata,
     output reg sram_read, sram_write,
     
-    input [31:0] sram_rdata,
+    input [63:0] sram_rdata,
     input sram_ready
 );
 
@@ -24,12 +24,12 @@ module Cache_Controller(
     reg [9:0] tag1 [0:63];
     reg [0:0] LRU [0:63]; //Least Recently Used
     wire offset, hit, hit0, hit1;
-    reg cacheUsed, firstWordLoaded, secondWordLoaded, cacheDataInvalid;
+    reg cacheUsed, sram_block_read, secondWordLoaded, cacheDataInvalid;
     wire [5:0] index;
     wire [9:0] tag;
     wire [63:0] dataBlock;
     reg [1:0] ps, ns;
-    parameter [1:0] idle = 2'd0, readFirstWord = 2'd1, readSecondWord = 2'd2, write = 2'd3;
+    parameter [1:0] idle = 2'd0, read = 2'd1, readSecondWord = 2'd2, write = 2'd3;
     
     //Cache memory
     integer i;
@@ -45,42 +45,32 @@ module Cache_Controller(
                 LRU[i] <= 1'b0;
             end
         end
-        else if (cacheUsed) begin
-            if (hit0) LRU[index] <= 1'b1;
-            else if (hit1) LRU[index] <= 1'b0;
-        end
-        else if (firstWordLoaded) begin
-            if (LRU[index] == 1'b0) begin
-                if (offset == 1'b0) way0[index][31:0] <= sram_rdata;
-                else if (offset == 1'b1) way0[index][63:32] <= sram_rdata;
+        else begin
+            if (cacheUsed) begin
+                if (hit0) LRU[index] <= 1'b1;
+                else if (hit1) LRU[index] <= 1'b0;
             end
-            if (LRU[index] == 1'b1) begin
-                if (offset == 1'b0) way1[index][31:0] <= sram_rdata;
-                else if (offset == 1'b1) way1[index][63:32] <= sram_rdata;
+            if (sram_block_read) begin
+                if (LRU[index] == 1'b0) begin
+                    way0[index] <= sram_rdata;
+                    tag0[index] <= tag; 
+                    valid0[index] <= 1'b1;
+                end
+                if (LRU[index] == 1'b1) begin
+                    if way1[index] <= sram_rdata;
+                    tag1[index] <= tag; 
+                    valid1[index] <= 1'b1;
+                end
             end
-        end
-        else if (secondWordLoaded) begin
-            if (LRU[index] == 1'b0) begin
-                if (offset == 1'b0) way0[index][31:0] <= sram_rdata;
-                else if (offset == 1'b1) way0[index][63:32] <= sram_rdata;
-                tag0[index] <= tag; 
-                valid0[index] <= 1'b1;
-            end
-            if (LRU[index] == 1'b1) begin
-                if (offset == 1'b0) way1[index][31:0] <= sram_rdata;
-                else if (offset == 1'b1) way1[index][63:32] <= sram_rdata;
-                tag1[index] <= tag; 
-                valid1[index] <= 1'b1;
-            end
-        end
-        else if (cacheDataInvalid) begin
-            if (hit0 == 1'b1) begin
-                valid0[index] <= 1'b0; 
-                LRU[index] <= 1'b0; 
-            end
-            else if (hit1 == 1'b1) begin
-                valid1[index] <= 1'b0; 
-                LRU[index] <= 1'b1; 
+            if (cacheDataInvalid) begin
+                if (hit0 == 1'b1) begin
+                    valid0[index] <= 1'b0; 
+                    LRU[index] <= 1'b0; 
+                end
+                else if (hit1 == 1'b1) begin
+                    valid1[index] <= 1'b0; 
+                    LRU[index] <= 1'b1; 
+                end
             end
         end
     end
@@ -99,26 +89,19 @@ module Cache_Controller(
     always @(ps, MEM_R_EN, MEM_W_EN, hit, sram_ready) begin
         ns <= idle;
         sram_wdata <= wdata;
-        {sram_read, sram_write, ready, cacheUsed, firstWordLoaded, secondWordLoaded, cacheDataInvalid} <= 7'b0;
+        {sram_read, sram_write, ready, cacheUsed, sram_block_read, cacheDataInvalid} <= 6'b0;
 
         case(ps)
             idle: begin 
-                ns <= MEM_W_EN ? write : (MEM_R_EN && ~hit) ? readFirstWord : idle; 
+                ns <= MEM_W_EN ? write : (MEM_R_EN && ~hit) ? read : idle; 
                 ready <= ~(MEM_W_EN || (MEM_R_EN && ~hit)); 
                 cacheUsed <= (MEM_R_EN && hit); 
                 end
-            readFirstWord: begin 
-                ns <= sram_ready ? readSecondWord : readFirstWord; 
+            read: begin 
+                ns <= sram_ready ? idle : read; 
                 sram_read <= 1'b1; 
                 sram_address <= address;
-                firstWordLoaded <= sram_ready; 
-                end
-            readSecondWord: begin 
-                ns <= sram_ready ? idle : readSecondWord; 
-                sram_read <= 1'b1;
-                sram_address <= {address[31:3], ~address[2], address[1:0]};
-                secondWordLoaded <= sram_ready; 
-                ready <= sram_ready; 
+                sram_block_read <= sram_ready; 
                 end
             write: begin 
                 ns <= sram_ready ? idle : write; 
