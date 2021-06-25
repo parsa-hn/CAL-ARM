@@ -1,5 +1,5 @@
 module EXE_Stage_Reg(
-    input clk, rst, sram_freeze, 
+    input clk, rst, cache_freeze, 
     input WB_en_in, MEM_R_EN_in, MEM_W_EN_in,
     input [31:0] ALU_Result_in, val_Rm_in,
     input [3:0] Dest_in,
@@ -16,7 +16,7 @@ module EXE_Stage_Reg(
             val_Rm <= 0;
             Dest <= 0;
         end
-		else if (~sram_freeze) begin 
+		else if (~cache_freeze) begin 
             WB_en <= WB_en_in; 
             MEM_R_EN <= MEM_R_EN_in; 
             MEM_W_EN <= MEM_W_EN_in; 

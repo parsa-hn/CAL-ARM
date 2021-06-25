@@ -19,7 +19,7 @@ module SRAM_Controller(
 
     assign {SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N} = 4'b0;
     assign SRAM_DQ = SRAM_WE_N ? 64'bz : {32'b0, writeData};
-    assign SRAM_ADDR = address[16:0] - 17'd1024;
+    assign SRAM_ADDR = (address[16:0] - 17'd1024) >> 2;
     
     always @(ps, write_en, read_en) begin
         ns <= idle;

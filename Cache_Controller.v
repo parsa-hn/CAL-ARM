@@ -57,7 +57,7 @@ module Cache_Controller(
                     valid0[index] <= 1'b1;
                 end
                 if (LRU[index] == 1'b1) begin
-                    if way1[index] <= sram_rdata;
+                    way1[index] <= sram_rdata;
                     tag1[index] <= tag; 
                     valid1[index] <= 1'b1;
                 end
@@ -75,6 +75,11 @@ module Cache_Controller(
         end
     end
 
+    // 1024 = 10_000000_000        ?= 11_000000_000
+    // 1028 = 10_000000_100
+    // 1032 = 10_000001_000
+    // 1036 = 10_000001_100
+
     //Cache controller
     assign offset = address[2];
     assign index = address[8:3];
@@ -89,6 +94,7 @@ module Cache_Controller(
     always @(ps, MEM_R_EN, MEM_W_EN, hit, sram_ready) begin
         ns <= idle;
         sram_wdata <= wdata;
+        sram_address <= address;
         {sram_read, sram_write, ready, cacheUsed, sram_block_read, cacheDataInvalid} <= 6'b0;
 
         case(ps)
@@ -100,7 +106,6 @@ module Cache_Controller(
             read: begin 
                 ns <= sram_ready ? idle : read; 
                 sram_read <= 1'b1; 
-                sram_address <= address;
                 sram_block_read <= sram_ready; 
                 end
             write: begin 
