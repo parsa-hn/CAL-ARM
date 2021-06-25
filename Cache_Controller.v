@@ -17,7 +17,11 @@ module Cache_Controller(
 );
 
     reg [63:0] way0 [0:63];
+    reg [31:0] way0offset1 [0:63];
+    reg [31:0] way0offset0 [0:63];
     reg [63:0] way1 [0:63];
+    reg [31:0] way1offset1 [0:63];
+    reg [31:0] way1offset0 [0:63];
     reg [0:0] valid0 [0:63];
     reg [0:0] valid1 [0:63];
     reg [9:0] tag0 [0:63];
@@ -37,7 +41,11 @@ module Cache_Controller(
         if (rst) begin
             for(i = 0; i < 64; i = i + 1) begin
                 way0[i] <= 64'b0;
+                way0offset0[i] <= 32'b0;
+                way0offset1[i] <= 32'b0;
                 way1[i] <= 64'b0;
+                way1offset0[i] <= 32'b0;
+                way1offset1[i] <= 32'b0;
                 valid0[i] <= 1'b0;
                 valid1[i] <= 1'b0;
                 tag0[i] <= 10'b0;
@@ -53,13 +61,19 @@ module Cache_Controller(
             if (sram_block_read) begin
                 if (LRU[index] == 1'b0) begin
                     way0[index] <= sram_rdata;
+                    way0offset0[index] <= sram_rdata[31:0];
+                    way0offset1[index] <= sram_rdata[63:32];
                     tag0[index] <= tag; 
                     valid0[index] <= 1'b1;
+                    LRU[index] <= 1'b1;
                 end
-                if (LRU[index] == 1'b1) begin
+                else if (LRU[index] == 1'b1) begin
                     way1[index] <= sram_rdata;
+                    way1offset0[index] <= sram_rdata[31:0];
+                    way1offset1[index] <= sram_rdata[63:32];
                     tag1[index] <= tag; 
                     valid1[index] <= 1'b1;
+                    LRU[index] <= 1'b0;
                 end
             end
             if (cacheDataInvalid) begin
@@ -74,11 +88,6 @@ module Cache_Controller(
             end
         end
     end
-
-    // 1024 = 10_000000_000        ?= 11_000000_000
-    // 1028 = 10_000000_100
-    // 1032 = 10_000001_000
-    // 1036 = 10_000001_100
 
     //Cache controller
     assign offset = address[2];
