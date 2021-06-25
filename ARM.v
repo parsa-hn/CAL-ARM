@@ -44,6 +44,9 @@ module ARM(
     wire sram_ctrl_ready, SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N;
     wire [31:0] sram_ctrl_readData;
 
+    wire [31:0] cache_r_data, cache_sram_address, cache_sram_wdata;
+    wire cache_ready, cache_sram_read, cache_sram_write;
+
     //Forwarding unit wires
     wire [1:0] FU_Sel_src1, FU_Sel_src2;
 
@@ -105,8 +108,13 @@ module ARM(
     );
     
     //MEM Stage
+    Cache_Controller cache_controller(
+        clk, rst, EXE_Reg_ALU_result, Exe_Reg_Val_Rm, Exe_Reg_MEM_R_EN, Exe_Reg_MEM_W_EN,
+        cache_r_data, cache_ready, cache_sram_address, cache_sram_wdata, cache_sram_read, cache_sram_write,
+        sram_ctrl_readData, sram_ctrl_ready
+    );
     SRAM_Controller sram_controller(
-        clk, rst, Exe_Reg_MEM_W_EN, Exe_Reg_MEM_R_EN, EXE_Reg_ALU_result, Exe_Reg_Val_Rm,
+        clk, rst, cache_sram_write, cache_sram_read, cache_sram_address, cache_sram_wdata,
         sram_ctrl_readData, sram_ctrl_ready, SRAM_DQ, SRAM_ADDR, SRAM_WE_N, SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N
     );
     MEM_Stage_Reg mem_stage_reg(

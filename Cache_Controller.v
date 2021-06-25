@@ -6,11 +6,11 @@ module Cache_Controller(
     input MEM_R_EN, MEM_W_EN,
 
     output [31:0] rdata,
-    output ready,
+    output reg ready,
 
     //SRAM controller
-    output [31:0] sram_address, sram_wdata,
-    output sram_read, sram_write,
+    output reg [31:0] sram_address, sram_wdata,
+    output reg sram_read, sram_write,
     
     input [31:0] sram_rdata,
     input sram_ready
