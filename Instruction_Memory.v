@@ -75,12 +75,11 @@ module Instruction_Memory
 			32'd60 : Instruction <= 32'b1110010010010000_0111_010000011000; //LDR R7 ,[R0],#1048
 			32'd64 : Instruction <= 32'b1110010010010000_1000_010000011100; //LDR R8 ,[R0],#1052
 			// Checkout cache speed up
-			32'd68 : Instruction <= 32'b1110010010010000_0001_001000000000; //LDR R1 ,[R0],#512
+			32'd68 : Instruction <= 32'b1110010010010000_1001_001000000000; //LDR R9 ,[R0],#512
 			// Checkout cache replacing policy
-			32'd8 : Instruction <= 32'b1110010010010000_0010_000000000100; //LDR R2 ,[R0],#2
-
-
-
+			32'd72 : Instruction <= 32'b1110010010010000_1010_000000000100; //LDR R10 ,[R0],#4
+			// STR
+			32'd76 : Instruction <= 32'b1110010010000000_1000_010000001000; //STR R8 ,[R0],#1032
 
 		endcase
 	end

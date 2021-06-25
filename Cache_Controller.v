@@ -100,7 +100,7 @@ module Cache_Controller(
     assign rdata = offset ? dataBlock[63:32] : dataBlock[31:0];
 
     //SRAM interface
-    always @(ps, MEM_R_EN, MEM_W_EN, hit, sram_ready) begin
+    always @(*) begin
         ns <= idle;
         sram_wdata <= wdata;
         sram_address <= address;
